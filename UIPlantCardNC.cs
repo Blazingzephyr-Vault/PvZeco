@@ -5,7 +5,35 @@ using UnityEngine.UI;
 
 public class UIPlantCardNC : MonoBehaviour, IPointerDownHandler, IEventSystemHandler
 {
-	private bool isChoosed;
+    #region Major New Logic
+    /// <summary>
+    /// Edit: patch the seed chooser card's sun cost.
+    /// Reasoning: no way to edit the costs via assets at the moment.
+    /// </summary>
+    public int GetCost()
+	{
+		return (CardPlantType, CardZombieType) switch
+		{
+			(PlantType.ScaredyShroom, _)	=>	275,
+			_								=>	NeedNum
+		};
+	}
+
+    /// <summary>
+    /// Edit: patch the seed chooser card's cooldown time.
+    /// Reasoning: no way to edit the costs via assets at the moment.
+    /// </summary>
+    public float GetCooldown()
+    {
+        return (CardPlantType, CardZombieType) switch
+        {
+            (PlantType.ScaredyShroom, _)	=>	30,
+            _								=>	CDTime
+        };
+    }
+    #endregion
+
+    private bool isChoosed;
 
 	public bool isNeedSun;
 
@@ -39,11 +67,16 @@ public class UIPlantCardNC : MonoBehaviour, IPointerDownHandler, IEventSystemHan
 		}
 	}
 
-	private void Start()
-	{
-		cardImage = base.transform.GetComponent<Image>();
-		IsChoosed = false;
-	}
+    private void Start()
+    {
+        cardImage = base.transform.GetComponent<Image>();
+        IsChoosed = false;
+
+        // Patch the data after the script is activated.
+        // No access to the Editor at the moment.
+        NeedNum = GetCost();
+        CDTime = GetCooldown();
+    }
 
 	public void OnPointerDown(PointerEventData eventData)
 	{

@@ -6,7 +6,106 @@ using UnityEngine.Events;
 
 public abstract class PlantBase : MonoBehaviour
 {
-	public int OnlineId;
+    #region Major New Logic
+	/// <summary>
+	/// Whether this zombie can be stalled.
+	/// </summary>
+    protected bool canStall = true;
+
+    /// <summary>
+    /// Stall applied by Scaredy-Shroom.
+    /// </summary>
+    private float stallLevel;
+
+	/// <summary>
+	/// Apply stall and adjust the speed rate.
+	/// </summary>
+    public float StallLevel
+	{
+		get => stallLevel;
+		private set
+		{
+			stallLevel = value;
+			AdjustSpeedRate();
+		}
+	}
+
+	/// <summary>
+	/// Reset the colors and apply stall and freeze.
+	/// </summary>
+	private void AdjustSpeedRate()
+	{
+		SpeedRate = (1f - stallLevel) * (1f - FrozenLevel * 0.05f);
+		ResetColor();
+    }
+
+    protected void ResetColor()
+    {
+        float r = 1f;
+        float g = 1f;
+        float b = 1f;
+        float a = REnderer.material.GetColor("_Color").a;
+
+        if (needHypnoPurple)
+        {
+            r *= 0.88f;
+            g *= 0.39f;
+        }
+
+        if (frozenLevel > 0)
+        {
+            r *= 1f - frozenLevel * 0.055f;
+            g *= 1f - frozenLevel * 0.05f;
+            b *= 1f - frozenLevel * 0.005f;
+        }
+
+        if (stallLevel > 0)
+        {
+            r *= 1f - stallLevel * 0.7451f;
+            g *= 1f - stallLevel * 1.749f;
+            b *= 1f - stallLevel * 0.6f;
+        }
+
+        SetColor(new Color(r, g, b, a));
+    }
+
+    /// <summary>
+    /// Stall duration coroutine.
+    /// </summary>
+    private Coroutine stallCoroutine;
+
+    public void ApplyScaredyStall(float stall, float duration, bool isSyn = false)
+    {
+        if ((isSyn || !GameManager.Instance.isClient) && canStall)
+        {
+            StallLevel = stall;
+            if (stallCoroutine != null) StopCoroutine(stallCoroutine);
+            stallCoroutine = StartCoroutine(StallWearOff(stall, duration));
+
+            if (GameManager.Instance.isServer)
+            {
+                SynItem synItem = new SynItem();
+                synItem.OnlineId = OnlineId;
+                synItem.Type = 2;
+                synItem.SynCode[0] = 0;
+                synItem.SynCode[1] = 2;
+                SocketServer.Instance.SendSynBag(synItem);
+            }
+        }
+    }
+
+    protected IEnumerator StallWearOff(float stall, float duration)
+    {
+        float currStall = stall / 100;
+        while (stallLevel > 0)
+        {
+            yield return new WaitForSeconds(duration / 100f);
+            StallLevel -= currStall;
+        }
+    }
+    #endregion Edits
+
+    public int OnlineId;
 
 	public string PlacePlayer;
 
@@ -189,8 +288,7 @@ public abstract class PlantBase : MonoBehaviour
 			{
 				frozenCoroutine = StartCoroutine(DoFuncWait(UnFrozen, 4.5f - (float)FrozenLevel * 0.4f));
 			}
-			SpeedRate = 1f - (float)FrozenLevel * 0.05f;
-			ResetColor();
+			AdjustSpeedRate();
 		}
 	}
 
@@ -392,23 +490,6 @@ public abstract class PlantBase : MonoBehaviour
 		else if (isSleeping)
 		{
 			GoAwake();
-		}
-	}
-
-	protected void ResetColor()
-	{
-		float a = REnderer.material.GetColor("_Color").a;
-		if (FrozenLevel > 0)
-		{
-			SetColor(new Color(1f - (float)FrozenLevel * 0.055f, 1f - (float)FrozenLevel * 0.05f, 1f - (float)FrozenLevel * 0.005f, a));
-		}
-		else if (needHypnoPurple)
-		{
-			SetColor(new Color(0.88f, 0.39f, 1f, a));
-		}
-		else
-		{
-			SetColor(new Color(1f, 1f, 1f, a));
 		}
 	}
 

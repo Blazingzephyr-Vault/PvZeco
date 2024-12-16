@@ -28,8 +28,8 @@ public class AlmanacCardSlot : MonoBehaviour
 		if (nC.CardPlantType != 0 || nC.CardZombieType != 0)
 		{
 			REnderer.sprite = nC.cardImage.sprite;
-			NeedNumText.text = nC.NeedNum.ToString();
-			CdTime = nC.CDTime;
+			NeedNumText.text = nC.GetCost().ToString();
+			CdTime = nC.GetCooldown();
 		}
 		else
 		{
