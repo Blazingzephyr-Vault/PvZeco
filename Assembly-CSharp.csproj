@@ -12,43 +12,43 @@
   <ItemGroup />
   <ItemGroup>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>UnityBinaries\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.SpriteMaskModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>UnityBinaries\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>C:\Users\MSI\Downloads\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath>UnityBinaries\UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
