@@ -1,3 +1,4 @@
+using System.Drawing;
 using UnityEngine;
 
 public class ShroomPuff : MonoBehaviour
@@ -87,6 +88,13 @@ public class ShroomPuff : MonoBehaviour
         // New parameters for the Scaredy-Shroom remake.
         spawnsPuffshroom = spwnPf;
         spawnsImitated = isImt;
+
+        Grid gridByWorldPos = MapManager.Instance.GetGridByWorldPos(base.transform.position, CurrLine);
+        if (gridByWorldPos.CurrPlantBase.ProtectPlant.GetPlantType() == PlantType.Heronsbill)
+        {
+            spawnsPuffshroom = true;
+			spawnsImitated = 0;
+        }
 	}
 
 	private void Update()

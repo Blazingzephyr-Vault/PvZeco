@@ -1,6 +1,7 @@
 using FTRuntime;
 using SocketSave;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Chomper : PlantBase
 {
@@ -16,11 +17,14 @@ public class Chomper : PlantBase
 
 	protected override int attackValue => 40;
 
-	protected override void OnInitForPlace()
+	private bool shouldEat;
+
+    protected override void OnInitForPlace()
 	{
 		clipController.clip.sequence = "idel";
 		canSwallow = false;
-	}
+        shouldEat = false;
+    }
 
 	protected override void FrameChangeEvent(SwfClip swfClip)
 	{
@@ -52,7 +56,8 @@ public class Chomper : PlantBase
 				else
 				{
 					swfClip.sequence = "idel";
-				}
+                    base.transform.GetComponent<CapsuleCollider2D>().enabled = true;
+                }
 			}
 		}
 		if (swfClip.sequence == "chew" && swfClip.currentFrame == swfClip.frameCount - 1 && canSwallow)
@@ -63,7 +68,8 @@ public class Chomper : PlantBase
 		if (swfClip.sequence == "swallow" && swfClip.currentFrame == swfClip.frameCount - 1)
 		{
 			swfClip.sequence = "idel";
-		}
+            base.transform.GetComponent<CapsuleCollider2D>().enabled = true;
+        }
 		if (swfClip.sequence == "idel" && swfClip.currentFrame == 3 && currGrid != null)
 		{
 			CheckAttack();
@@ -92,7 +98,19 @@ public class Chomper : PlantBase
 		}
 	}
 
-	private bool Attack()
+    public void OnMouseDown()
+    {
+		if (!EventSystem.current.IsPointerOverGameObject())
+		{
+			shouldEat = !shouldEat;
+			if (shouldEat)
+			{
+				REnderer.material.SetColor("_Color", Color.red);
+			}
+		}
+    }
+
+    private bool Attack()
 	{
 		isHit = false;
 		zombie = ZombieManager.Instance.GetZombieByLineMinDistance(currGrid.Point.y, base.transform.position, base.IsFacingLeft, isHypno);
@@ -102,17 +120,18 @@ public class Chomper : PlantBase
 		}
 		if (Mathf.Abs(zombie.transform.position.x - base.transform.position.x) < 2.2f)
 		{
-			if (zombie.CanEatByChomper)
+			if (shouldEat && zombie.CanEatByChomper)
 			{
-				int num = zombie.Hp / 100 + 1;
-				Invoke("ChewEnd", num * 3);
-				zombie.DirectDead(canDropItem: true, 0f);
-				isHit = true;
-			}
+				shouldEat = false;
+                int num = zombie.Hp / 100 + 1;
+                Invoke("ChewEnd", num * 3);
+                zombie.DirectDead(canDropItem: true, 0f);
+                isHit = true;
+            }
 			else
 			{
-				zombie.Hurt(attackValue, Vector2.zero);
-			}
+                zombie.Hurt(attackValue, Vector2.zero);
+            }
 		}
 		return isHit;
 	}

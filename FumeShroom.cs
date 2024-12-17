@@ -5,6 +5,10 @@ using UnityEngine.Rendering;
 
 public class FumeShroom : PlantBase
 {
+	/// <summary>
+	private float range = 7f;
+	/// </summary>
+	
 	private Vector3 creatBulletOffsetPos = new Vector2(1.2f, 0.24f);
 
 	public override float MaxHp => 300f;
@@ -52,7 +56,7 @@ public class FumeShroom : PlantBase
 		{
 			ZombieBase zombieByLineMinDistance = ZombieManager.Instance.GetZombieByLineMinDistance(currGrid.Point.y, base.transform.position, base.IsFacingLeft, isHypno);
 			PlantBase minDisPlant = MapManager.Instance.GetMinDisPlant(base.transform.position, currGrid.Point.y, base.IsFacingLeft, !isHypno);
-			if ((zombieByLineMinDistance != null && Mathf.Abs(zombieByLineMinDistance.transform.position.x - base.transform.position.x) < 5.6f) || (minDisPlant != null && Mathf.Abs(minDisPlant.transform.position.x - base.transform.position.x) < 5.6f))
+			if ((zombieByLineMinDistance != null && Mathf.Abs(zombieByLineMinDistance.transform.position.x - base.transform.position.x) < range) || (minDisPlant != null && Mathf.Abs(minDisPlant.transform.position.x - base.transform.position.x) < range))
 			{
 				clipController.clip.sequence = "shoot";
 				clipController.rateScale = 2.5f * base.SpeedRate;
@@ -66,7 +70,7 @@ public class FumeShroom : PlantBase
 		{
 			return;
 		}
-		List<ZombieBase> zombies = ZombieManager.Instance.GetZombies(currGrid.Point.y, base.transform.position, 5.6f, isHypno, needCapsule: true);
+		List<ZombieBase> zombies = ZombieManager.Instance.GetZombies(currGrid.Point.y, base.transform.position, range, isHypno, needCapsule: true);
 		List<PlantBase> linePlant = MapManager.Instance.GetLinePlant(base.transform.position, currGrid.Point.y, 15f, !isHypno);
 		for (int i = 0; i < zombies.Count; i++)
 		{

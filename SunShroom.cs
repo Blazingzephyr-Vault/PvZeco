@@ -6,13 +6,13 @@ using UnityEngine.Events;
 
 public class SunShroom : PlantBase
 {
-	private float createSunTime = 24f;
+	private float createSunTime;
 
-	private float lightTime = 1.5f;
+	private float lightTime;
 
-	private int Sunsum = 20;
+	private int Sunsum;
 
-	private int growTime = 120;
+	private int growTime;
 
 	private bool isBig;
 
@@ -29,9 +29,12 @@ public class SunShroom : PlantBase
 	protected override void OnInitForPlace()
 	{
 		isBig = false;
-		growTime = 120;
-		Sunsum = 15;
-		GrowCoroutine = StartCoroutine(Grow());
+		growTime = 10;
+		Sunsum = 150;
+		createSunTime = 8f;
+		lightTime = 1.5f;
+        GrowCoroutine = StartCoroutine(Grow());
+
 		if (!GameManager.Instance.isClient)
 		{
 			InvokeRepeating("CreateSun", createSunTime, createSunTime);
@@ -47,6 +50,9 @@ public class SunShroom : PlantBase
 			{
 				isBig = true;
 				clipController.clip.sequence = "bigidel";
+
+                clipController.clip.transform.localScale = new Vector3(1.2f, 1.2f);
+                //clipController.clip.transform.localScale = new Vector3(0.7f, 0.7f);
 			}
 		}
 		else if (swfClip.currentFrame == closeEyeFrame)
@@ -104,8 +110,14 @@ public class SunShroom : PlantBase
 	{
 		if (currGrid != null)
 		{
-			SkyManager.Instance.CreatePlantSun(base.transform.position, Sunsum, isSun: true, PlacePlayer);
-		}
+			SkyManager.Instance.CreatePlantSun(base.transform.position, 50, isSun: true, PlacePlayer);
+            SkyManager.Instance.CreatePlantSun(base.transform.position, 50, isSun: true, PlacePlayer);
+            SkyManager.Instance.CreatePlantSun(base.transform.position, 50, isSun: true, PlacePlayer);
+            SkyManager.Instance.CreatePlantSun(base.transform.position, 50, isSun: true, PlacePlayer);
+            SkyManager.Instance.CreatePlantSun(base.transform.position, 50, isSun: true, PlacePlayer);
+            SkyManager.Instance.CreatePlantSun(base.transform.position, 50, isSun: true, PlacePlayer);
+            SkyManager.Instance.CreatePlantSun(base.transform.position, Sunsum, isSun: true, PlacePlayer);
+        }
 	}
 
 	private IEnumerator Grow()
@@ -115,7 +127,7 @@ public class SunShroom : PlantBase
 			yield return new WaitForSeconds(1f);
 			growTime--;
 		}
-		Sunsum = 40;
+		Sunsum = 15;
 		clipController.clip.sequence = "grow";
 		AudioManager.Instance.PlayEFAudio(GameManager.Instance.AudioConf.plantgrow, base.transform.position);
 	}

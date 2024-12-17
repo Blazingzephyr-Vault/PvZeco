@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using FTRuntime;
 using UnityEngine;
 using UnityEngine.Events;
@@ -48,7 +49,33 @@ public class Marigold : PlantBase
 	}
 
 	private void InstantiateCoin()
-	{
-		ZombieManager.Instance.DropCoin(base.transform.position, AllDrop: true);
-	}
+    {
+        StartCoroutine(ColorEffect3(lightTime, 2f, InstantiateCoin));
+
+        //ZombieManager.Instance.DropCoin(base.transform.position, AllDrop: true);
+    }
+
+    protected IEnumerator ColorEffect3(float wantBright, float delayTime, UnityAction fun)
+    {
+        float currBright = 1f;
+		List<ZombieBase> zombies;
+
+        while (currBright < wantBright)
+        {
+            yield return new WaitForSeconds(delayTime);
+            currBright += 0.05f;
+
+            zombies = ZombieManager.Instance.GetZombies(currGrid.Point.y, base.transform.position, 15f, isHypno, needCapsule: false);
+			foreach (var z in zombies)
+			{
+				//z.SetAllBrightness(2f);
+			}
+        }
+
+        zombies = ZombieManager.Instance.GetZombies(currGrid.Point.y, base.transform.position, 15f, isHypno, needCapsule: false);
+        foreach (var z in zombies)
+        {
+            //z.SetAllBrightness(1);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FTRuntime;
 using UnityEngine;
 
@@ -14,7 +14,13 @@ public class Cactus : PlantBase
 
 	protected override int attackValue => 20;
 
-	private void CheckAttack()
+    protected override void OnInitForPlace()
+    {
+        base.OnInitForPlace();
+        SkyManager.Instance.DirectSetRainScale(10);
+    }
+
+    private void CheckAttack()
 	{
 		if (isSleeping || currGrid == null)
 		{
@@ -83,8 +89,8 @@ public class Cactus : PlantBase
 	private void CreateThron(Vector3 pos)
 	{
 		if (currGrid != null)
-		{
-			if (Random.Range(0, 2) == 1)
+        {
+            if (Random.Range(0, 2) == 1)
 			{
 				AudioManager.Instance.PlayEFAudio(GameManager.Instance.AudioConf.Throw, base.transform.position);
 			}
@@ -102,7 +108,17 @@ public class Cactus : PlantBase
 			{
 				component.Init(attackValue, base.transform.position + pos, currGrid.Point.y, Vector2.right, GetBulletSortOrder(), isHypno, TargetZombie);
 			}
-		}
+
+
+            //PoolManager.Instance.GetObj(GameManager.Instance.GameConf.EFObj).GetComponent<EFObj>().CreateInit(base.transform.position + new Vector3(-3.14f, 5.96f, 0f), 1, new Color(1f, 1f, 1f, 1f), GetBulletSortOrder());
+            //Grid grid = currGrid;
+            //CameraControl.Instance.ShakeCamera(base.transform.position);
+            //grid.HaveCrater = true;
+
+            //MapManager.Instance.mapList[0].fog.IsOpen = true;
+            //MapManager.Instance.mapList[0].fog.CreateFog(5);
+            //MapManager.Instance.mapList[0].fog.MoveBack();
+        }
 	}
 
 	protected override void FrameChangeEvent(SwfClip swfClip)

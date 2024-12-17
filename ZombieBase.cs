@@ -90,7 +90,8 @@ public abstract class ZombieBase : MonoBehaviour
                 synItem.OnlineId = OnlineId;
                 synItem.Type = 2;
                 synItem.SynCode[0] = 0;
-                synItem.SynCode[1] = 2;
+                synItem.SynCode[1] = 5;
+				synItem.Twofloat = new Vector2(stall, duration);
                 SocketServer.Instance.SendSynBag(synItem);
             }
         }
@@ -1341,6 +1342,10 @@ public abstract class ZombieBase : MonoBehaviour
 					RatThis(synClient: true);
 				}
 			}
+			else if (syn.SynCode[1] == 5)
+            {
+				ApplyScaredyStall(syn.Twofloat.x, syn.Twofloat.y, true);
+            }
 		}
 		else if (syn.SynCode[0] == 1)
 		{

@@ -19,9 +19,15 @@ public class Torchwood : PlantBase
 	protected override void OnInitForPlace()
 	{
 		FireCollider.enabled = true;
-	}
+        /*MapBase currMap = MapManager.Instance.GetCurrMap(base.transform.position);
+        Fog fog = currMap.fog;
 
-	protected override void FrameChangeEvent(SwfClip swfClip)
+        fog.IsOpen = true;
+        fog.CreateFog(10);
+        fog.MoveBack();*/
+    }
+
+    protected override void FrameChangeEvent(SwfClip swfClip)
 	{
 		if (swfClip.sequence == "idel" && swfClip.currentFrame == closeEyeFrame)
 		{

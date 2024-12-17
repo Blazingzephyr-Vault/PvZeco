@@ -407,41 +407,58 @@ public class LV : MonoBehaviour
 
 	private void LV1()
 	{
-		CardNum = 10;
-		LvNormalSunNum = 50;
-		MapManager.Instance.CreateMap(new List<GameObject> { GameManager.Instance.GameConf.FrontYard });
-		if (IsEasy)
-		{
-			SetupTime = new Vector2(15f, 18f);
-			Weights = new List<List<int>>
-			{
-				new List<int> { 1, 1, 2, 8, 12, 10, 20, 15, 20, 35 }
-			};
-		}
-		else
-		{
-			SetupTime = new Vector2(8f, 12f);
-			Weights = new List<List<int>>
-			{
-				new List<int> { 2, 2, 4, 8, 12, 10, 20, 28, 30, 45 }
-			};
-		}
-		ZombieTypes = new List<List<ZombieType>>
-		{
-			new List<ZombieType>
-			{
-				ZombieType.NormalZombie,
-				ZombieType.ConeZombie,
-				ZombieType.Polevaulter,
-				ZombieType.PaperZombie,
-				ZombieType.BucketZombie,
-				ZombieType.DoorAndCone,
-				ZombieType.FootballZombie
-			}
-		};
-		BigWaveNum = new List<int> { 3, 6, 9 };
-		SkyManager.Instance.DirectSetTime(1140);
-	}
+        if (IsEasy)
+        {
+            CardNum = 15;
+            LvNormalSunNum = 150;
+            SetupTime = new Vector2(15f, 18f);
+            Weights = new List<List<int>>
+            {
+                new List<int> { 1, 2, 8, 12, 18, 35 },
+                new List<int> { 1, 1, 4, 6, 12, 22 }
+            };
+        }
+        else
+        {
+            CardNum = 12;
+            LvNormalSunNum = 100;
+            SetupTime = new Vector2(8f, 12f);
+            Weights = new List<List<int>>
+            {
+                new List<int> { 2, 4, 12, 18, 28, 55 },
+                new List<int> { 1, 3, 5, 6, 12, 22 }
+            };
+        }
+        SkyManager.Instance.DirectSetRainScale(5);
+        MapManager.Instance.CreateMap(new List<GameObject>
+        {
+            GameManager.Instance.GameConf.FrontYard,
+            GameManager.Instance.GameConf.Roof
+        });
+        ZombieTypes = new List<List<ZombieType>>
+        {
+            new List<ZombieType>
+            {
+                ZombieType.NormalZombie,
+                ZombieType.ConeZombie,
+                ZombieType.BucketZombie,
+                ZombieType.Zomboni,
+                ZombieType.FootballZombie,
+                ZombieType.JackboxZombie,
+                ZombieType.Gargantuar
+            },
+            new List<ZombieType>
+            {
+                ZombieType.NormalZombie,
+                ZombieType.ConeZombie,
+                ZombieType.BucketZombie,
+                ZombieType.FootballZombie,
+                ZombieType.CatapultZombie
+            }
+        };
+        BigWaveNum = new List<int> { 5 };
+        SkyManager.Instance.DirectSetTime(256);
+    }
 
 	private void LV2()
 	{

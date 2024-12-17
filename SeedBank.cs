@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class SeedBank : MonoBehaviour
 {
-	public int CardNum = 4;
+    ///
+    public List<PlantCard> SlotList => slotList;
+    ///
+
+    public int CardNum = 4;
 
 	private int DecidedCardNum;
 

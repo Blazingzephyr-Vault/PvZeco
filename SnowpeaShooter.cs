@@ -56,7 +56,9 @@ public class SnowpeaShooter : PlantBase
 		clipController.clip.sequence = "idel";
 		clipController.rateScale = 1.5f * base.SpeedRate;
 		HeadAnimator.speed = base.SpeedRate;
-	}
+
+        SkyManager.Instance.IsThunder = true;
+    }
 
 	protected override void FrameChangeEvent(SwfClip swfClip)
 	{

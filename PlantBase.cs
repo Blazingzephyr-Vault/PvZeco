@@ -12,20 +12,25 @@ public abstract class PlantBase : MonoBehaviour
 	/// </summary>
     protected bool canStall = true;
 
-    /// <summary>
-    /// Stall applied by Scaredy-Shroom.
-    /// </summary>
-    private float stallLevel;
+	/// <summary>
+	/// Stall applied by Scaredy-Shroom.
+	/// </summary>
+	private float stallLevel;
 
 	/// <summary>
-	/// Apply stall and adjust the speed rate.
+	/// 
 	/// </summary>
+    private float stallDuration;
+
+    /// <summary>
+    /// Apply stall and adjust the speed rate.
+    /// </summary>
     public float StallLevel
 	{
 		get => stallLevel;
 		private set
 		{
-			stallLevel = value;
+            stallLevel = value;
 			AdjustSpeedRate();
 		}
 	}
@@ -78,17 +83,19 @@ public abstract class PlantBase : MonoBehaviour
     {
         if ((isSyn || !GameManager.Instance.isClient) && canStall)
         {
-            StallLevel = stall;
-            if (stallCoroutine != null) StopCoroutine(stallCoroutine);
-            stallCoroutine = StartCoroutine(StallWearOff(stall, duration));
+            StallLevel += stall;
+
+            //if (stallCoroutine != null) StopCoroutine(stallCoroutine);
+            //stallCoroutine = StartCoroutine(StallWearOff(stall, duration));
+            StartCoroutine(StallWearOff(stall, duration));
 
             if (GameManager.Instance.isServer)
             {
                 SynItem synItem = new SynItem();
                 synItem.OnlineId = OnlineId;
                 synItem.Type = 2;
-                synItem.SynCode[0] = 0;
-                synItem.SynCode[1] = 2;
+                synItem.SynCode[0] = 1;
+                synItem.SynCode[1] = 6;
                 SocketServer.Instance.SendSynBag(synItem);
             }
         }
@@ -96,11 +103,14 @@ public abstract class PlantBase : MonoBehaviour
 
     protected IEnumerator StallWearOff(float stall, float duration)
     {
-        float currStall = stall / 100;
+        float currStall = stall / 100f;
+		float currDur = duration / 100f;
+
         while (stallLevel > 0)
         {
             yield return new WaitForSeconds(duration / 100f);
             StallLevel -= currStall;
+			stallDuration -= currDur;
         }
     }
     #endregion Edits
@@ -551,6 +561,10 @@ public abstract class PlantBase : MonoBehaviour
 			{
 				RatThis(synClient: true);
 			}
+		}
+		else if (syn.SynCode[1] == 6)
+		{
+			ApplyScaredyStall(syn.Twofloat.x, syn.Twofloat.y, true);
 		}
 	}
 

@@ -14,7 +14,7 @@ public class UIPlantCardNC : MonoBehaviour, IPointerDownHandler, IEventSystemHan
 	{
 		return (CardPlantType, CardZombieType) switch
 		{
-			(PlantType.ScaredyShroom, _)	=>	275,
+			(PlantType.ScaredyShroom, _)	=>	50,
 			_								=>	NeedNum
 		};
 	}
@@ -27,7 +27,7 @@ public class UIPlantCardNC : MonoBehaviour, IPointerDownHandler, IEventSystemHan
     {
         return (CardPlantType, CardZombieType) switch
         {
-            (PlantType.ScaredyShroom, _)	=>	30,
+            (PlantType.ScaredyShroom, _)	=>	5,
             _								=>	CDTime
         };
     }

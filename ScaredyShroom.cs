@@ -14,12 +14,12 @@ public class ScaredyShroom : PlantBase
     /// <summary>
 	/// Equals to half of Conehead health.
 	/// </summary>
-    protected override int attackValue => 320;
+    protected override int attackValue => 50;
 
 	/// <summary>
 	/// Shooting cooldown time.
 	/// </summary>
-	private float shootingCooldownTime = 14.5f;
+	private float shootingCooldownTime = 1.35f;
 
     /// <summary>
     /// Counts idle repeat count so that shooting triggers after several sequenced idles.

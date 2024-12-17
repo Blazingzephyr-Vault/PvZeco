@@ -75,7 +75,21 @@ public class FirePea : MonoBehaviour
 		if (collision.tag == "Zombie")
 		{
 			ZombieBase componentInParent = collision.GetComponentInParent<ZombieBase>();
-			if (componentInParent.CurrLine == CurrLine && ((componentInParent.isHypno && isHypno) || (!componentInParent.isHypno && !isHypno)))
+
+            /*if ((componentInParent.CurrLine == CurrLine || CurrLine == -1) && ((componentInParent.isHypno && isHypno) || (!componentInParent.isHypno && !isHypno)))
+            {
+                if (Starfruit != null)
+                {
+                    Starfruit.CheckZombieResult();
+                }
+                if (!isCheck)
+                {
+                    componentInParent.Hurt(attackValue, Dirction);
+                    HitEff();
+                }
+            }*/
+
+            if (componentInParent.CurrLine == CurrLine && ((componentInParent.isHypno && isHypno) || (!componentInParent.isHypno && !isHypno)))
 			{
 				isHit = true;
 				AudioManager.Instance.PlayEFAudio(GameManager.Instance.AudioConf.FirePea, base.transform.position);

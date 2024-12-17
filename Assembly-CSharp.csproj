@@ -51,4 +51,7 @@
       <HintPath>UnityBinaries\UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;D:\Program Files\PvZ ECOLOGICAL 0.3.1\植物大战僵尸生态版_Data\Managed\&quot;&#xD;&#xA;" />
+  </Target>
 </Project>

@@ -1,10 +1,62 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class EffectPanel : MonoBehaviour
 {
-	public static EffectPanel Instance;
+    #region New Major Logic
+
+
+    protected IEnumerator HeronsbillStall(float wantBright, UnityAction fun)
+    {
+		// Color up, Brightness up
+		// Color fast down
+		// Brightness down
+
+		Color color = Color.white;
+
+		
+
+        float currBright = 1f;
+        while (currBright < wantBright)
+        {
+            yield return new WaitForSeconds(0.05f);
+            currBright += 0.05f;
+            REnderer.material.SetFloat("_Brightness", currBright);
+            if (ExtraREnderer != null)
+            {
+                ExtraREnderer.material.SetFloat("_Brightness", currBright);
+            }
+        }
+        REnderer.material.SetFloat("_Brightness", 1f);
+        if (ExtraREnderer != null)
+        {
+            ExtraREnderer.material.SetFloat("_Brightness", 1f);
+        }
+        fun?.Invoke();
+    }
+
+    public void HeronsbillStall(Color color, float time, Vector2 pos)
+    {
+        if (!Displaying && !(MapManager.Instance.GetCurrMap(pos) != CameraControl.Instance.CurrMap))
+        {
+            panel.gameObject.SetActive(value: true);
+            panel.color = color;
+			StartCoroutine(WaitTime(time));
+        }
+    }
+
+    private IEnumerator WaitTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        panel.color = new Color(1f, 1f, 1f, 0f);
+        panel.gameObject.SetActive(value: false);
+    }
+
+    #endregion
+
+    public static EffectPanel Instance;
 
 	private Image panel;
 

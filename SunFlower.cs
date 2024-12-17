@@ -16,7 +16,9 @@ public class SunFlower : PlantBase
 	{
 		if (!GameManager.Instance.isClient)
 		{
-			InvokeRepeating("CreateSun", createSunTime, createSunTime);
+			//SeedBank.Instance.GetCardAt(0).NeedSun = 1000;
+
+            InvokeRepeating("CreateSun", createSunTime, createSunTime);
 		}
 	}
 

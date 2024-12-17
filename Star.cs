@@ -119,7 +119,20 @@ public class Star : MonoBehaviour
 				}
 			}
 		}
-		if (!(collision.tag == "Wall") || collision.transform.GetComponent<MapWall>().IsPass(Dirction))
+		if (collision.tag == "Torchwood")
+        {
+            Torchwood componentInParent = collision.GetComponentInParent<Torchwood>();
+			if ((componentInParent.lineNum == CurrLine || CurrLine == -1))
+            {
+                AudioManager.Instance.PlayEFAudio(GameManager.Instance.AudioConf.FirePea, base.transform.position);
+                FirePea component2 = PoolManager.Instance.GetObj(GameManager.Instance.GameConf.FirePea1).GetComponent<FirePea>();
+                component2.transform.SetParent(null);
+                component2.Init(base.transform.position, attackValue, CurrLine, Dirction, GetComponent<SpriteRenderer>().sortingOrder, isHypno);
+                Destroy();
+            }
+        }
+
+        if (!(collision.tag == "Wall") || collision.transform.GetComponent<MapWall>().IsPass(Dirction))
 		{
 			return;
 		}
